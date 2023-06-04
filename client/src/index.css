@@ -1,0 +1,26 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+a {
+  text-decoration: none;
+  color: #ababab;
+}
+li {
+  list-style: none;
+}
+button {
+  background: transparent;
+  border: none;
+  outline: none;
+  color: #ababab;
+}
+
+body {
+  font-family: "Poppins", sans-serif;
+  background: #141e30;
+  background: -webkit-linear-gradient(to right, #243b55, #141e30);
+  background: linear-gradient(to right, #243b55, #141e30);
+  min-height: 100vh;
+  color: #ababab;
+}
