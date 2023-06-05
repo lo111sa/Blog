@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "../../axios";
 
+//Create new post
 export const createPost = createAsyncThunk(
   "posts/createPost",
   async (params) => {
@@ -14,8 +15,15 @@ export const createPost = createAsyncThunk(
   }
 );
 
-export const getAllPosts = createAsyncThunk("post/getAllPosts", async () => {
+//Get all posts
+export const getAllPosts = createAsyncThunk("posts/getAllPosts", async () => {
   const { data } = await axios.get("/posts");
+  return data;
+});
+
+//Remove post
+export const removePost = createAsyncThunk("posts/removePost", async (id) => {
+  const { data } = await axios.delete(`/posts/${id}`, id);
   return data;
 });
 const initialState = {
@@ -51,6 +59,25 @@ export const postSlice = createSlice({
         state.popularPosts = action.payload.popularPosts;
       }),
       builder.addCase(getAllPosts.rejected, (state) => {
+        state.isLoading = false;
+      });
+
+    //Remove post
+    builder.addCase(removePost.pending, (state) => {
+      state.isLoading = true;
+    }),
+      builder.addCase(removePost.fulfilled, (state, action) => {
+        state.isLoading = false;
+        console.log(action.payload);
+        state.posts = state.posts.filter(
+          (post) => post._id !== action.meta.arg
+        );
+
+        state.popularPosts = state.popularPosts.filter(
+          (post) => post._id !== action.meta.arg
+        );
+      }),
+      builder.addCase(removePost.rejected, (state) => {
         state.isLoading = false;
       });
   },

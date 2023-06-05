@@ -1,14 +1,21 @@
-import React from "react";
+import React, { useState } from "react";
 import { AiFillEye, AiOutlineMessage } from "react-icons/ai";
 import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { removePost } from "../redux/slices/postSlice";
 
 const PostItem = ({ _id, username, imgUrl, title, createdAt, text, views }) => {
+  const dispatch = useDispatch();
+
   return (
     <div className="d-flex flex-column w-75   mb-4 border rounded shadow ">
-      <div className="d-flex  gap-3 align-items-center p-3 ">
+      <div className="d-flex  gap-3 align-items-center justify-content-between p-3 ">
         <div className=" text-white opacity-50">{username}</div>
         <div className=" text-white opacity-50">
           {new Date(createdAt).toDateString()}
+        </div>
+        <div>
+          <button onClick={() => dispatch(removePost(_id))}>X</button>
         </div>
       </div>
       <Link to={`/${_id}`}>

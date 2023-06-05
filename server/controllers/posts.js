@@ -5,7 +5,6 @@ import path, { dirname } from "path";
 import { fileURLToPath } from "url";
 
 //Create post
-
 export const createPost = async (req, res) => {
   try {
     const { title, text } = req.body;
@@ -50,7 +49,6 @@ export const createPost = async (req, res) => {
 };
 
 //Get all posts
-
 export const getAll = async (req, res) => {
   try {
     const posts = await Post.find().sort("-createdAt");
@@ -66,6 +64,7 @@ export const getAll = async (req, res) => {
   }
 };
 
+//Get post by id
 export const getById = async (req, res) => {
   try {
     const post = await Post.findByIdAndUpdate(req.params.id, {
@@ -80,21 +79,9 @@ export const getById = async (req, res) => {
   }
 };
 
+//Get My Posts
 export const getMyPosts = async (req, res) => {
   try {
-    /*  const user = await User.findById(req.userId);
-    const list = await Promise.all(
-      user.posts.map((post) => {
-        return Post.findById(post._id);
-      })
-    );
-
-    if (!list) {
-      return res.json("You have no posts");
-    }
-
-    res.json(list); */
-
     const list = await Post.find({ author: req.userId });
 
     if (!list) {
@@ -104,5 +91,22 @@ export const getMyPosts = async (req, res) => {
     res.json(list);
   } catch (error) {
     res.json({ message: "Could not find  posts" });
+  }
+};
+
+//Remove Post
+export const removePost = async (req, res) => {
+  try {
+    const post = await Post.findByIdAndDelete(req.params.id);
+
+    if (!post) return res.json({ message: "No post found to delete" });
+
+    await User.findByIdAndUpdate(req.userId, {
+      $pull: { posts: req.params.id },
+    });
+
+    res.json({ message: " Post deleted" });
+  } catch (error) {
+    res.json({ message: "Can't delete post" });
   }
 };
