@@ -30,9 +30,9 @@ app.use("/api/posts", postRoute);
 async function start() {
   try {
     await mongoose.connect(
-      `mongodb+srv://${DB_USER}:${DB_PASSWORD}@cluster0.vuthdrx.mongodb.net/${DB_NAME}?retryWrites=true&w=majority`
+      `mongodb+srv://${"losaberidze777"}:${"123asdASD"}@cluster0.vuthdrx.mongodb.net/${"full-blog"}?retryWrites=true&w=majority`
     );
-    app.listen(PORT, () => console.log(`server started on port ${PORT}`));
+    app.listen(5000, () => console.log(`server started on port ${5000}`));
   } catch (error) {
     console.log(error);
   }
