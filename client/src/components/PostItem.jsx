@@ -1,22 +1,48 @@
 import React, { useState } from "react";
-import { AiFillEye, AiOutlineMessage } from "react-icons/ai";
+import {
+  AiFillEye,
+  AiOutlineMessage,
+  AiFillDelete,
+  AiOutlineEdit,
+} from "react-icons/ai";
 import { Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { removePost } from "../redux/slices/postSlice";
 
-const PostItem = ({ _id, username, imgUrl, title, createdAt, text, views }) => {
+const PostItem = ({
+  _id,
+  username,
+  imgUrl,
+  title,
+  createdAt,
+  text,
+  views,
+  author,
+  comments,
+}) => {
+  const user = useSelector((state) => state.auth.user);
   const dispatch = useDispatch();
 
   return (
     <div className="d-flex flex-column w-75   mb-4 border rounded shadow ">
       <div className="d-flex  gap-3 align-items-center justify-content-between p-3 ">
-        <div className=" text-white opacity-50">{username}</div>
-        <div className=" text-white opacity-50">
-          {new Date(createdAt).toDateString()}
-        </div>
         <div>
-          <button onClick={() => dispatch(removePost(_id))}>X</button>
+          <div className=" text-white fs-3 ">{username}</div>
+          <div className=" text-white opacity-50 fs-6">
+            {new Date(createdAt).toDateString()}
+          </div>
         </div>
+
+        {user?._id === author && (
+          <div className="d-flex align-items-center gap-2">
+            <button>
+              <AiOutlineEdit />
+            </button>
+            <button onClick={() => dispatch(removePost(_id))}>
+              <AiFillDelete />
+            </button>
+          </div>
+        )}
       </div>
       <Link to={`/${_id}`}>
         <div>
@@ -37,7 +63,7 @@ const PostItem = ({ _id, username, imgUrl, title, createdAt, text, views }) => {
         </button>
 
         <button className="d-flex align-items-center gap-1">
-          <AiOutlineMessage /> <span>0</span>
+          <AiOutlineMessage /> <span>{comments?.length || 0}</span>
         </button>
       </div>
     </div>

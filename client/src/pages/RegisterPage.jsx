@@ -56,11 +56,13 @@ const RegisterPage = () => {
         />
       </label>
       <div className="w-100 d-flex gap-3 justify-content-between align-items-center">
-        <button type="submit" className="btn btn-primary w-50">
+        <button type="submit" className="btn btn-primary w-50 ">
           Register
         </button>
 
-        <Link to="/login">Already registered?</Link>
+        <Link className="text-white w-75" to="/login">
+          Already registered?
+        </Link>
       </div>
     </form>
   );

@@ -37,7 +37,7 @@ const LoginPage = () => {
       className="d-flex flex-column gap-4 w-25 p-3 bg-light bg-transparent rounded mx-auto my-5"
       onSubmit={handleSubmit(onSubmit)}
     >
-      <p className="text-lg-center">Login Page</p>
+      <p className="text-lg-center ">Login Page</p>
       <label className="d-flex flex-column gap-2">
         Username :
         <input
@@ -66,7 +66,9 @@ const LoginPage = () => {
           Login
         </button>
 
-        <Link to="/register">Registration</Link>
+        <Link className="text-white" to="/register">
+          Sign up
+        </Link>
       </div>
     </form>
   );
