@@ -50,7 +50,7 @@ const PostItem = ({
             <img
               className="w-100 mb-3"
               src={`http://localhost:5000/${imgUrl}`}
-              alt="image"
+              alt={imgUrl}
             />
           )}
         </div>
